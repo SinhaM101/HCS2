@@ -10,7 +10,7 @@ public class Maze
   
   public static void main(String[] args)
   {
-    GridDisplay grid = load("maze1.txt");
+    GridDisplay grid = load("maze2.txt");
     //solveRecursive(grid, 1, 1);
     //solveStack(grid);
     solveQueue(grid);
@@ -101,7 +101,7 @@ public class Maze
       {
         grid.setColor(temp, VISIT_COLOR);
         //System.out.println(temp);
-        //grid.pause(1);
+        grid.pause(10);
         toVisit.enqueue(new Location(temp.getRow()+1, temp.getCol()));
         toVisit.enqueue(new Location(temp.getRow()-1, temp.getCol()));
         toVisit.enqueue(new Location(temp.getRow(), temp.getCol()+1));
