@@ -10,10 +10,11 @@ public class Maze
   
   public static void main(String[] args)
   {
-    GridDisplay grid = load("maze2.txt");
+    GridDisplay grid = load("maze3.txt");
     //solveRecursive(grid, 1, 1);
     //solveStack(grid);
-    solveQueue(grid);
+    //solveQueue(grid);
+    solveArray(grid);
     System.out.println("Done");
     //testingStack();
     //testingQueue();
@@ -106,6 +107,32 @@ public class Maze
         toVisit.enqueue(new Location(temp.getRow()-1, temp.getCol()));
         toVisit.enqueue(new Location(temp.getRow(), temp.getCol()+1));
         toVisit.enqueue(new Location(temp.getRow(), temp.getCol()-1));
+      }
+    }
+    
+  }
+
+  // Extra Credit
+  public static void solveArray(GridDisplay grid)
+  {
+    ArrayList<Location> toVisit = new ArrayList<Location>();
+    Location loc = new Location(1,1);
+    toVisit.add(loc);
+    //System.out.println(toVisit.peek());
+    
+    while(!toVisit.isEmpty())
+    {
+      Location temp = toVisit.remove(toVisit.size()-1);
+      
+      if (grid.getColor(temp).equals(PATH_COLOR))
+      {
+        grid.setColor(temp, VISIT_COLOR);
+        //System.out.println(temp);
+        grid.pause(1);
+        toVisit.add(new Location(temp.getRow()+1, temp.getCol()));
+        toVisit.add(new Location(temp.getRow()-1, temp.getCol()));
+        toVisit.add(new Location(temp.getRow(), temp.getCol()+1));
+        toVisit.add(new Location(temp.getRow(), temp.getCol()-1));
       }
     }
     
