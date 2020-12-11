@@ -7,14 +7,25 @@ public class Maze
   private static final Color WALL_COLOR = new Color(0, 0, 0);
   private static final Color PATH_COLOR = new Color(255, 255, 255);
   private static final Color VISIT_COLOR = new Color(255, 0, 0);
+  private static ArrayList<Color> rain = new ArrayList<Color> ();
   
   public static void main(String[] args)
   {
-    GridDisplay grid = load("maze3.txt");
+    rain.add(new Color(255, 0, 0)); // red
+    //rain.add(new Color(255,165,0)); // orange
+    //rain.add(new Color(255,255,0)); // yellow
+    //rain.add(new Color(0,140,0)); // green
+    rain.add(new Color(0,0,255)); // blue
+    //rain.add(new Color(75,0,140)); // indigo
+    GridDisplay grid = load("maze1.txt");
     //solveRecursive(grid, 1, 1);
     //solveStack(grid);
     //solveQueue(grid);
-    solveArray(grid);
+    //solveArray(grid);
+    //gradiantStack(grid);
+    //gradiantQueue(grid);
+    //simultaneousStack(grid);
+    //generateMaze(15, 25);
     System.out.println("Done");
     //testingStack();
     //testingQueue();
@@ -55,7 +66,7 @@ public class Maze
     else
     {
       grid.setColor(new Location(row, col), VISIT_COLOR);
-      grid.pause(1);
+      grid.pause(5);
       if (grid.getColor(new Location(row-1,col)).equals(PATH_COLOR))
         solveRecursive(grid, row-1, col);
       if(grid.getColor(new Location(row+1,col)).equals(PATH_COLOR))
@@ -78,7 +89,7 @@ public class Maze
       if (grid.getColor(temp).equals(PATH_COLOR))
       {
         grid.setColor(temp, VISIT_COLOR);
-        grid.pause(1);
+        grid.pause(5);
         toVisit.push(new Location(temp.getRow()+1, temp.getCol()));
         toVisit.push(new Location(temp.getRow()-1, temp.getCol()));
         toVisit.push(new Location(temp.getRow(), temp.getCol()+1));
@@ -102,7 +113,7 @@ public class Maze
       {
         grid.setColor(temp, VISIT_COLOR);
         //System.out.println(temp);
-        grid.pause(10);
+        grid.pause(5);
         toVisit.enqueue(new Location(temp.getRow()+1, temp.getCol()));
         toVisit.enqueue(new Location(temp.getRow()-1, temp.getCol()));
         toVisit.enqueue(new Location(temp.getRow(), temp.getCol()+1));
@@ -113,22 +124,39 @@ public class Maze
   }
 
   // Extra Credit
+
   public static void solveArray(GridDisplay grid)
   {
     ArrayList<Location> toVisit = new ArrayList<Location>();
-    Location loc = new Location(1,1);
+    Location loc = new Location(1, 1);
     toVisit.add(loc);
     //System.out.println(toVisit.peek());
     
     while(!toVisit.isEmpty())
     {
-      Location temp = toVisit.remove(toVisit.size()-1);
-      
+      Location temp = null;
+      if (toVisit.size() > 1)
+      {
+        int pres = toVisit.get(0).getRow() + toVisit.get(0).getCol();
+        int spot = 0;
+        for (int i = 1; i < toVisit.size(); i ++)
+        {
+          if (pres < toVisit.get(i).getRow() + toVisit.get(i).getCol())
+          {
+            pres = toVisit.get(i).getRow() + toVisit.get(i).getCol();
+            spot = i;
+          }
+        }
+        System.out.println(spot);
+        temp = toVisit.remove(spot);
+      }
+      else
+        temp = toVisit.remove(toVisit.size()-1);
       if (grid.getColor(temp).equals(PATH_COLOR))
       {
         grid.setColor(temp, VISIT_COLOR);
         //System.out.println(temp);
-        grid.pause(1);
+        grid.pause(5);
         toVisit.add(new Location(temp.getRow()+1, temp.getCol()));
         toVisit.add(new Location(temp.getRow()-1, temp.getCol()));
         toVisit.add(new Location(temp.getRow(), temp.getCol()+1));
@@ -136,6 +164,78 @@ public class Maze
       }
     }
     
+  }
+
+  public static void gradiantStack (GridDisplay grid)
+  {
+    ArrayStack<Location> toVisit = new ArrayStack<Location>();
+    Location loc = new Location(1,1);
+    toVisit.push(loc);
+    int spot = 0;
+    int r = 255;
+    int g = 0;
+    int b = 0;
+    while (!toVisit.isEmpty())
+    {
+      Location temp = toVisit.pop();
+      if (grid.getColor(temp).equals(PATH_COLOR))
+      {
+        if (spot == rain.size()-1)
+          spot = 0;
+        r -= 15;
+        b += 15;
+        grid.setColor(temp, new Color (r, g ,b));
+        if (b == 225)
+          b = 0;
+        if (r == 0)
+          r = 225;
+        
+        grid.pause(5);
+        toVisit.push(new Location(temp.getRow()+1, temp.getCol()));
+        toVisit.push(new Location(temp.getRow()-1, temp.getCol()));
+        toVisit.push(new Location(temp.getRow(), temp.getCol()+1));
+        toVisit.push(new Location(temp.getRow(), temp.getCol()-1));
+      }
+    }
+  }
+
+  public static void gradiantQueue(GridDisplay grid)
+  {
+    LLQueue<Location> toVisit = new LLQueue<Location>();
+    Location loc = new Location(1,1);
+    toVisit.enqueue(loc);
+    int spot = 0;
+    int r = 255;
+    int g = 0;
+    int b = 0;
+    while (!toVisit.isEmpty())
+    {
+      Location temp = toVisit.dequeue();
+      if (grid.getColor(temp).equals(PATH_COLOR))
+      {
+        if (spot == rain.size()-1)
+          spot = 0;
+        r -= 15;
+        b += 15;
+        grid.setColor(temp, new Color (r, g ,b));
+        if (b == 225)
+          b = 0;
+        if (r == 0)
+          r = 225;
+        
+        grid.pause(5);
+        toVisit.enqueue(new Location(temp.getRow()+1, temp.getCol()));
+        toVisit.enqueue(new Location(temp.getRow()-1, temp.getCol()));
+        toVisit.enqueue(new Location(temp.getRow(), temp.getCol()+1));
+        toVisit.enqueue(new Location(temp.getRow(), temp.getCol()-1));
+      }
+    }
+  }
+
+  public static GridDisplay generateMaze (int row, int col)
+  {
+    GridDisplay grid = new GridDisplay (row, col);
+    return grid;
   }
   
   public static GridDisplay load(String file)
