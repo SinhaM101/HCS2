@@ -24,7 +24,7 @@ public class Maze
     //solveArray(grid);
     //gradiantStack(grid);
     //gradiantQueue(grid);
-    //simultaneousStack(grid);
+    solveSimultaneous(grid);
     //generateMaze(15, 25);
     System.out.println("Done");
     //testingStack();
@@ -230,6 +230,79 @@ public class Maze
         toVisit.enqueue(new Location(temp.getRow(), temp.getCol()-1));
       }
     }
+  }
+
+  public static void solveSimultaneous(GridDisplay grid)
+  {
+    // ArrayList<Location> toVisit = new ArrayList<Location>();
+    // ArrayList<Location> toDisit = new ArrayList<Location>();
+    // Location loc = new Location(1, 1);
+    // Location doc = new Location(grid.getNumRows()-2, grid.getNumCols()-2);
+    // toVisit.add(loc);
+    // toDisit.add(doc);
+    // //System.out.println(toVisit.peek());
+    
+    // while(!toVisit.isEmpty() && !toDisit.isEmpty())
+    // {
+    //   Location temp = null;
+    //   if (toVisit.size() > 1)
+    //   {
+    //     int pres = toVisit.get(0).getRow() + toVisit.get(0).getCol();
+    //     int spot = 0;
+    //     for (int i = 1; i < toVisit.size(); i ++)
+    //     {
+    //       if (pres < toVisit.get(i).getRow() + toVisit.get(i).getCol())
+    //       {
+    //         pres = toVisit.get(i).getRow() + toVisit.get(i).getCol();
+    //         spot = i;
+    //       }
+    //     }
+    //     System.out.println(spot);
+    //     temp = toVisit.remove(spot);
+    //   }
+    //   else
+    //     temp = toVisit.remove(toVisit.size()-1);
+    //   if (grid.getColor(temp).equals(PATH_COLOR))
+    //   {
+    //     grid.setColor(temp, rain.get(0));
+    //     //System.out.println(temp);
+    //     grid.pause(5);
+    //     toVisit.add(new Location(temp.getRow()+1, temp.getCol()));
+    //     toVisit.add(new Location(temp.getRow()-1, temp.getCol()));
+    //     toVisit.add(new Location(temp.getRow(), temp.getCol()+1));
+    //     toVisit.add(new Location(temp.getRow(), temp.getCol()-1));
+    //   }
+    
+
+    // Location temp2 = null;
+    //   if (toDisit.size() > 1)
+    //   {
+    //     int pres = toDisit.get(0).getRow() + toDisit.get(0).getCol();
+    //     int spot = 0;
+    //     for (int i = 1; i < toDisit.size(); i ++)
+    //     {
+    //       if (pres < toDisit.get(i).getRow() + toDisit.get(i).getCol())
+    //       {
+    //         pres = toDisit.get(i).getRow() + toDisit.get(i).getCol();
+    //         spot = i;
+    //       }
+    //     }
+    //     System.out.println(spot);
+    //     temp2 = toVisit.remove(spot);
+    //   }
+    //   else
+    //     temp2 = toVisit.remove(toVisit.size()-1);
+    //   if (grid.getColor(temp2).equals(PATH_COLOR))
+    //   {
+    //     grid.setColor(temp2, rain.get(1));
+    //     //System.out.println(temp);
+    //     grid.pause(5);
+    //     toDisit.add(new Location(temp2.getRow()+1, temp2.getCol()));
+    //     toDisit.add(new Location(temp2.getRow()-1, temp2.getCol()));
+    //     toDisit.add(new Location(temp2.getRow(), temp2.getCol()+1));
+    //     toDisit.add(new Location(temp2.getRow(), temp2.getCol()-1));
+    //   }
+    // }
   }
 
   public static GridDisplay generateMaze (int row, int col)
