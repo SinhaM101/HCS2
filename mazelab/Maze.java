@@ -42,7 +42,6 @@ public class Maze
     x.pop();
     System.out.println(x.peek());
     System.out.println(x.isEmpty());
-    //System.out.println(x.peek());
   }
 
   public static void testingQueue()
