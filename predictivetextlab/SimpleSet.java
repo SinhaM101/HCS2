@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class SimpleSet<E>
+public class SimpleSet<E> implements Iterable<E>
 {
   private ArrayList<E> elements;
   
@@ -45,5 +45,10 @@ public class SimpleSet<E>
   public String toString()
   {
     return elements.toString();
+  }
+
+  public Iterator<E> iterator()
+  {
+    return elements.iterator();
   }
 }

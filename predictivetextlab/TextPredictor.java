@@ -11,14 +11,39 @@ public class TextPredictor
   
   public void record(String[] words)
   {
-    for (int i = 0; i < words.length; i ++)
+    if (!map.containsKey(""))
     {
-      
+      map.put("", new Tally());
+    }
+    map.get("").addWord(words[0]);
+    for (int i = 1; i < words.length; i ++)
+    {
+      if (!map.containsKey(words[i-1]))
+      {
+        map.put(words[i-1], new Tally());
+      }
+      map.get(words[i-1]).addWord(words[i]);
     }
   }
   
   public Tally predict(String[] recentWords)
   {
-    throw new RuntimeException("Implement me");
+    if (map.containsKey(recentWords[recentWords.length-1]))
+    {
+      return map.get(recentWords[recentWords.length-1]);
+    }
+    return null;
+  }
+
+  public void display()
+  {
+    for (String k : map.keySet())
+    {
+      if (k.equals(""))
+        System.out.println("key: " + "EMPTY");
+      else
+        System.out.println("key: " + k);
+      System.out.println("value: " + map.get(k).getWords() + ": " + map.get(k).getTotal());
+    }
   }
 }

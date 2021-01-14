@@ -4,7 +4,8 @@ public class Test
     {
         //testSet();
         //testMap();
-        testTally();
+        //testTally();
+        testPredictor();
     }
 
     public static void testSet()
@@ -23,6 +24,15 @@ public class Test
     {
         SimpleMap <String, Integer> map = new SimpleMap<String, Integer>();
         
+        System.out.println(map.put("A", 7));
+        System.out.println(map.put("A", 10));
+        System.out.println(map.put("B", 8));
+        System.out.println(map.put("C", 2));
+
+        for (String currentString : map.keySet())
+        {
+            System.out.println(currentString + ": " + map.get(currentString));
+        }
     }
 
     public static void testTally()
@@ -37,5 +47,19 @@ public class Test
         System.out.println("count: " + t.getCount("chuck"));
         System.out.println("total: " + t.getTotal());
         System.out.println("words: " + t.getWords());
+    }
+
+    public static void testPredictor()
+    {
+        TextPredictor x = new TextPredictor();
+        String[] seuss = {"I", "am", "Sam", "Sam", "I", "am"};
+        String[] lucas = {"I", "am", "your", "father"};
+        x.record(seuss);
+        //x.display();
+        x.record(lucas);
+        //x.display();
+        String[] test1 = {"say", "hi", "to", "am", "covfefe"};
+        Tally t = x.predict(test1);
+        System.out.println(t.getWords() + ": " + t.getTotal());
     }
 }
