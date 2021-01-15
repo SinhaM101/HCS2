@@ -28,10 +28,10 @@ public class TextPredictor
   
   public Tally predict(String[] recentWords)
   {
-    if (map.containsKey(recentWords[recentWords.length-1]))
-    {
+    if (recentWords.length == 0)
+      return null;
+    else if (map.containsKey(recentWords[recentWords.length-1]))
       return map.get(recentWords[recentWords.length-1]);
-    }
     return null;
   }
 

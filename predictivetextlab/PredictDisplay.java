@@ -12,7 +12,7 @@ public class PredictDisplay implements ActionListener
   
   public static void main(String[] args)
   {
-    new PredictDisplay("handbook.txt");
+    new PredictDisplay("beemoviescript.txt");
   }
   
   private JFrame frame;
