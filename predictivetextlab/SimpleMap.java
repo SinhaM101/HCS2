@@ -17,34 +17,33 @@ public class SimpleMap<K,V>
   public V get(Object key)
   {
     for (Entry<K,V> e : entries)
-      if(e.getKey() == key)
+      if(e.getKey().equals(key))
         return e.getValue();
     return null;
   }
   
   public V put(K key, V value)
   {
-    V val = null;
-    for (Entry<K,V> e : entries)
-      if (e.getKey() == key)
-        {
-          val = e.getValue(); 
+    V val = get(key);
+    if (val == null)
+      entries.add(new Entry<K,V> (key, value));
+    else
+      for (Entry<K,V> e : entries)
+        if (e.getKey().equals(key))
           e.setValue(value);
-        }
     return val;
   }
   
   public V remove(Object key)
   {
     V val = null;
-    for (Entry<K,V> e : entries)
+    for (int i = 0; i < entries.size(); i ++)
     {
-      if (e.getKey() == key)
-      {
-        val = e.getValue();
-        e.setValue(null);
-        return val;
-      }
+      if (entries.get(i).getKey().equals(key))
+        {
+          val = entries.get(i).getValue();
+          entries.remove(i);
+        }
     }
     return val;
   }

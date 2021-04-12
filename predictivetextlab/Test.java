@@ -4,8 +4,8 @@ public class Test
     {
         //testSet();
         //testMap();
-        //testTally();
-        testPredictor();
+        testTally();
+        //testPredictor();
     }
 
     public static void testSet()
@@ -38,10 +38,10 @@ public class Test
     public static void testTally()
     {
         Tally t = new Tally();
-        t.addWord("wood");
+        t.addWord("hello");
         t.addWord("a");
         t.addWord("wood");
-        t.addWord("chuck");
+        t.addWord("goodbye");
         t.addWord("chuck");
         t.addWord("wood");
         System.out.println("count: " + t.getCount("chuck"));

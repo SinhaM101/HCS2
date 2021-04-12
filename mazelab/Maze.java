@@ -19,7 +19,7 @@ public class Maze
     //rain.add(new Color(75,0,140)); // indigo
     GridDisplay grid = load("maze1.txt");
     //solveRecursive(grid, 1, 1);
-    //solveStack(grid);
+    solveStack(grid);
     //solveQueue(grid);
     //solveArray(grid);
     //gradiantStack(grid);

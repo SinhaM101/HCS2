@@ -21,6 +21,8 @@ public class Tally
   
   public int getCount(String word)
   {
+    if (map.get(word) == null)
+      return 0;
     return map.get(word);
   }
   
@@ -39,7 +41,7 @@ public class Tally
       words.add(k);
     for (int i = 0; i < words.size(); i ++) // sorts words lowest to highest by length
       for (int j = i + 1; j < words.size(); j ++)
-        if (words.get(i).length() > words.get(j).length())
+        if (map.get(words.get(i)) < map.get(words.get(j)))
           {
             String temp = words.get(i);
             words.set(i,words.get(j)); 

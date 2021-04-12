@@ -16,8 +16,8 @@ public class SimpleSet<E> implements Iterable<E>
   
   public boolean contains(Object obj)
   {
-    for (E s : elements)
-      if (s == obj)
+    for (Object s : elements)
+      if (s.equals(obj))
         return true;
     return false;
   }
