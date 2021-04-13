@@ -13,7 +13,6 @@ public class MonishSinhaBot implements Strategy
     {
         numWins = numWinsNeeded;
         loc = new Location (0,0);
-        // if (p1Wins == numWinsNeeded || p2Wins == numWinsNeeded)
         board = new String [10][10];
         for (int i = 0; i < 10; i ++)
             for (int j = 0; j < 10; j ++)
