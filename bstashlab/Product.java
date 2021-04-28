@@ -1,3 +1,4 @@
+
 public class Product implements Comparable<Product>
 {
   private String model;
@@ -33,11 +34,35 @@ public class Product implements Comparable<Product>
   
   public int compareTo(Product other)
   {
-    throw new RuntimeException("implement me for binary search trees");
+    if (model.equals(other.getModel()))
+    {
+        if (version == other.getVersion())
+          return 0;
+        if (version < other.getVersion())
+          return -1;
+        else 
+          return 1;
+    }
+    else
+    {
+      if (model.compareTo(other.getModel()) == 0)
+        return 0;
+      else if (model.compareTo(other.getModel()) < 0)
+        return -1;
+      else
+        return 1;
+    }
   }
   
   public int hashCode()
   {
-    throw new RuntimeException("implement me for hashing");
+    String total = "";
+    total += version;
+    total += Math.abs(model.hashCode());
+     while(total.length() > 9)
+     {
+        total = total.substring(0,total.length()-2);
+     }
+    return (Integer.parseInt(total));
   }
 }
