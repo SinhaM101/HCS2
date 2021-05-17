@@ -18,8 +18,8 @@ public class MyHashSet<E>
 
   public boolean contains(Object obj)
   {
-    int hash = fixHash(obj.hashCode());
-    ListNode<E> temp = buckets[hash];
+    int index = fixHash(obj.hashCode());
+    ListNode<E> temp = buckets[index];
     if (temp == null)
       return false;
     if (temp.getValue().equals(obj))
@@ -41,31 +41,104 @@ public class MyHashSet<E>
 
   public boolean add(E obj)
   {
-    int hashed = fixHash(obj.hashCode());
+    int index = fixHash(obj.hashCode());
 
-    ListNode<E> newHash = buckets[hashed];
-    if(newHash == null)
+    ListNode<E> temp = buckets[index];
+    if(temp == null)
     {
-      buckets[hashed] = new ListNode<>(obj,null);
+      buckets[index] = new ListNode<>(obj,null);
       size ++;
       return true;
     }
-    if(newHash.getValue().equals(obj))
-    {
+    if(temp.getValue().equals(obj))
       return false;
-    }
-    while(newHash.getNext() != null)
+    while(temp.getNext() != null)
     {
-      if(newHash.getNext().getValue().equals(obj))
-      {
+      if(temp.getNext().getValue().equals(obj))
         return false;
-      }
-      newHash = newHash.getNext();
+      temp = temp.getNext();
     }
-    newHash.setNext(new ListNode<>(obj,null));
+    temp.setNext(new ListNode<>(obj,null));
     size++;
     return true;
   }
+
+  // Extracredit
+
+  public boolean remove (E obj)
+  {
+    for (int i = 0; i < size; i ++)
+    {
+      ListNode <E> temp = buckets[i];
+      if (temp != null) {
+        if (temp.getValue().equals(obj))
+        {
+          if (temp.getNext() != null)
+          {
+            temp = temp.getNext();
+            return true;
+          }
+          else
+          {
+            temp = null;
+            return true;
+          }
+        }
+        else
+        {
+          while (temp != null)
+          {
+            if (temp.getNext() != null)
+              if (temp.getNext().getValue().equals(obj))
+              {
+                temp.setNext(temp.getNext().getNext());
+                size--;
+                return true;
+              }
+            temp = temp.getNext();
+          }
+        }
+      }
+    }
+    return false;
+  }
+
+  //  public boolean remove(E obj)
+//  {
+//      for (int i = 0; i < size; i ++)
+//      {
+//        ListNode<E> temp = buckets[i];
+//        if (temp != null)
+//        {
+//          if (temp.getValue().equals(obj))
+//            if (temp.getNext() != null)
+//            {
+//              temp = temp.getNext();
+//              size--;
+//              return true;
+//            } else
+//            {
+//              temp = null;
+//              size--;
+//              return true;
+//            }
+//        } else
+//        {
+//          while (temp != null)
+//          {
+//            if (temp.getNext() != null)
+//              if (temp.getNext().getValue().equals(obj))
+//              {
+//                temp.setNext(temp.getNext().getNext());
+//                size--;
+//                return true;
+//              }
+//            temp = temp.getNext();
+//          }
+//        }
+//      }
+//    return false;
+//
   
   public String toString()
   {

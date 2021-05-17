@@ -4,7 +4,7 @@ public class BashingBeast
 {
   public static void main(String[] args)
   {
-    //testMyTreeSet();
+    testMyTreeSet();
     testMyHashSet();
   }
   
