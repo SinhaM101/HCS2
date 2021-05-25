@@ -2,12 +2,15 @@ import java.awt.*;
 import java.util.*;
 import javax.swing.JOptionPane;
 
-public class Game
+public class BlackHole
 {
+  // Extra Stuff
+  private Location currentBH; 
+  private String[] dir = {"L", "D", "R", "U"};
+  private int cDir;
+
   private GridDisplay display;
   private JOptionPane jPane; 
-//  private Location heroLoc;
-//  private String heroImage;
   private Location player1Loc;
   private String player1Image;
   private Location player2Loc;
@@ -15,44 +18,45 @@ public class Game
   private boolean p1;
   private boolean win;
   private String[][] board;
-  public Game()
+
+  public BlackHole()
   {
     //create GridDisplay with 6 rows and 7 columns, and title "Game"
-    display = new GridDisplay(6, 7);
+    display = new GridDisplay(12, 14);
     jPane = new JOptionPane();
-    display.setTitle("Game");
-    
+    display.setTitle("BlackHole");
     p1 = true;
     player1Loc = new Location (0,0);
     player2Loc = new Location (0,0);
     
     //put hero in bottom-left corner
-    board = new String [6][7];
+    board = new String[12][14];
     for (int i = 0; i < board.length; i ++)
       for (int j = 0; j < board[0].length; j ++)
         board[i][j] = ".";
 
       printBoard();
-      paintAll(new Color (0,0,0));
+      paintAll(new Color (80,76,164));
+      display.setColor(new Location(5,7), new Color(0,0,0));
+      board[5][7] = "x";
+      currentBH = new Location (5,7);
+      cDir = 0;
   }
 
-  public void initilize()
+  public void reset()
   {
     p1 = true;
     player1Loc = new Location (0,0);
     player2Loc = new Location (0,0);
     
     //put hero in bottom-left corner
-    board = new String[6][7];
     for (int i = 0; i < board.length; i ++)
       for (int j = 0; j < board[0].length; j ++)
         board[i][j] = ".";
     win = false;
     display.resetGrid();
-    paintAll(new Color (0,0,0));
+    paintAll(new Color (80,76,164));
   }
-  
-
 
   public void play()
   {
@@ -120,14 +124,12 @@ public class Game
       if (x == 1)
       {
         System.out.println("Player1 won!"); 
-        display.checkerBoard(new Color (250, 60, 91));
+        display.checkerBoard(new Color (252,4,44));
         // display.paintAll(new Color (225,225,225));
         win = true;
-        display.pause(5000);
         if (display.showConfirmDialog(true))
             {
-              display.showMessageDialog("Click on board Player 1");
-              initilize();
+              reset();
               return;
             }
         // jOptionPane.showMessageDialog(new JOptionPane(), "Player 1 Won!");
@@ -135,13 +137,11 @@ public class Game
       else if (x == 2)
       {
         System.out.println("Player2 won!");
-        display.checkerBoard(new Color (250, 250, 60));
+        display.checkerBoard(new Color (252,251,4));
         // display.paintAll(new Color (225,255,225));
-        display.pause(5000);
         if (display.showConfirmDialog(false))
           {
-            display.showMessageDialog("Click on board Player 2");
-            initilize();
+            reset();
             
             return;
           }
@@ -149,6 +149,7 @@ public class Game
       }
       p1 = false;
       printBoard();
+      step();
     }
     else
     {
@@ -164,15 +165,13 @@ public class Game
       if (x == 1)
       {
         System.out.println("Player1 won!"); 
-        display.checkerBoard(new Color (250, 60, 91));
+        display.checkerBoard(new Color (252,4,44));
         display.pause(5000);
         // display.paintAll(new Color (255,225,225));
 
         if (display.showConfirmDialog(true))
-        {
-            
-          display.showMessageDialog("Click on board Player 1");
-          initilize();
+          {
+            reset();
             
           return;
         }
@@ -182,18 +181,17 @@ public class Game
       {
         System.out.println("Player1 won!"); 
         // display.paintAll(new Color (225,255,225));
-        display.checkerBoard(new Color (250, 250, 60));
+        display.checkerBoard(new Color (252,251,4));
         display.pause(5000);
         if (display.showConfirmDialog(false))
-          {
-            display.showMessageDialog("Click on board Player 1");
-            initilize();
+          {reset();
             
           return;}
         win = true;
       }
       p1 = true;
       printBoard();
+      step();
     }
   }
 
@@ -413,19 +411,24 @@ public class Game
   //this method is called at regular intervals
   public void step()
   {
-    //maybe change color of random location to black
-    if (Math.random() < 0.1)
+    String d = dir[cDir];
+    Location loc = new Location (0,0);
+    if (d.equals("L"))
     {
-      int row = (int)(Math.random() * 3);
-      int col = (int)(Math.random() * 5);
-      display.setColor(new Location(row, col), new Color(0, 0, 0));
+      loc = new Location (currentBH.getRow(), currentBH.getCol() - 1);
+      if (display.isValid(loc))
+      {
+        board[loc.getRow()][loc.getCol()] = "x";
+        display.setColor(loc, new Color (0,0,0));
+        currentBH = loc;
+      }
     }
   }
   
   //this code starts a game when you click the run button
   public static void main(String[] args)
   {
-    Game g = new Game();
+    BlackHole g = new BlackHole();
     g.play();
   }
 }

@@ -4,6 +4,7 @@ import java.awt.image.*;
 import java.io.*;
 import java.net.*;
 import javax.imageio.*;
+import javax.lang.model.util.ElementScanner14;
 import javax.swing.*;
 
 public class GridDisplay extends JComponent implements KeyListener, MouseListener
@@ -42,11 +43,23 @@ public class GridDisplay extends JComponent implements KeyListener, MouseListene
     }
   }
 
-  public void paintAll(Color c)
+  public void checkerBoard(Color col)
+  {
+    int count = 0;
+    for(int r = 0; r < getNumRows(); r++)
+      for (int c = 0; c < getNumCols(); c ++)
+      {
+        if (count % 2 == 0)
+          cells[r][c].setColor(col);
+        count ++;
+      }   
+  }
+
+  public void resetGrid()
   {
     for (int i = 0; i < getNumRows(); i ++)
       for (int j = 0; j < getNumCols(); j ++)
-        cells[i][j].setColor(c);
+        cells[i][j].setImageFileName(null);
   }
   
   public int getNumRows()
@@ -327,6 +340,20 @@ public class GridDisplay extends JComponent implements KeyListener, MouseListene
   public String showInputDialog(String message, String[] choices)
   {
     return (String)JOptionPane.showInputDialog(this, message, null, JOptionPane.PLAIN_MESSAGE, null, choices, null);
+  }
+
+  public boolean showConfirmDialog(boolean p1)
+  {
+    String title;
+    if (p1)
+      title = "Player 1 Won!";
+    else
+      title = "Player 2 Won!";
+    int x = JOptionPane.showConfirmDialog(this, "Play Again?", title, JOptionPane.YES_NO_OPTION);
+    if (x == JOptionPane.YES_OPTION)
+      return true;
+    else
+      return false;
   }
   
    //returns number of seconds that have elapsed since January 1, 1970
